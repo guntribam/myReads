@@ -3,7 +3,6 @@ import {BrowserRouter} from 'react-router-dom';
 import {Route} from 'react-router-dom';
 import Search from "./components/Search/Search";
 import ListBooks from "./components/ListBooks/ListBooks";
-// import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 class BooksApp extends React.Component {
