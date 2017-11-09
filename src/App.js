@@ -17,6 +17,7 @@ class BooksApp extends React.Component {
 
 	componentDidMount = () => this.getBooks();
 
+	//This method add properties to be used by child components
 	buildBook = (bookObject) => {return {...bookObject, onShelfChange: this.onShelfChange, loading: false}}
 
 	getBooks = async () => {
@@ -30,7 +31,6 @@ class BooksApp extends React.Component {
 
 	onSearch = async (e) => {
 		const query = e.target.value;
-		console.log(query)
 		if (query !== '') {
 			try {
 				const books = await BooksAPI.search(query, 10)
@@ -42,6 +42,7 @@ class BooksApp extends React.Component {
 		}
 	}
 
+	//This method is used to change shelves with the loading animation
 	onShelfChange = async (newShelf, bookId) => {
 		this.activateLoading(bookId);
 		try {
@@ -54,6 +55,7 @@ class BooksApp extends React.Component {
 		}
 	}
 
+	//Loading animation in all Routes
 	activateLoading = (bookId) =>
 		this.setState(prevState => {
 			const books = prevState.books;
@@ -82,4 +84,5 @@ class BooksApp extends React.Component {
 		</BrowserRouter>
 }
 
+//This is the HOC of react-dnd used for the drag and drop feature
 export default DragDropContext(HTML5Backend)(BooksApp)
