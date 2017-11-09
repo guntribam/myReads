@@ -1,0 +1,19 @@
+.bookshelf {
+    width: 33%;
+    padding: 0 10px 20px;
+}
+
+@media (min-width: 600px) {
+    .bookshelf {
+        padding: 0 20px 10px;
+    }
+}
+
+.bookshelf-title {
+    text-align: center;
+    border-bottom: 1px solid #dedede;
+    margin: 12px auto;
+}
+.bookshelf-books {
+    text-align: center;
+}

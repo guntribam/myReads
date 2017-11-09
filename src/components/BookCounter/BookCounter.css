@@ -1,0 +1,10 @@
+.bookshelf-book-counter {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px;
+    text-align: center;
+    font-size: 16px;
+    margin: 6px 20px;
+    border-radius: 30%;
+}

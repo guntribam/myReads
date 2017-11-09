@@ -1,7 +1,8 @@
 import React from 'react';
+import './ShelfChanger.css'
 
 const ShelfChanger = ({onShelfChange, shelf, bookId}) =>
-        <div className="book-shelf-changer">
+        <div className="book-shelf-changer book-shelf-changer-icon">
             <select value={shelf} onChange={e => onShelfChange(e.target.value, bookId)}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
