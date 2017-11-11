@@ -10,6 +10,6 @@ const BookGrid = ({books}) =>
 					<Book {...book}/>
 				</li>)
 		}
-	</ol>
+	</ol>;
 
 export default BookGrid;

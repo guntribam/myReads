@@ -2,9 +2,8 @@ import React from 'react';
 import ShelfChanger from "../ShelfChanger/ShelfChanger";
 import {DragSource} from 'react-dnd'
 import './Book.css'
-import BookDragger from "../BookDragger/BookDragger";
 
-//This object specified by this method is return when drop occurs
+//This object specified by this method will return when drop occurs
 const bookSource = {
 	beginDrag(props) {
 		return {
@@ -13,7 +12,7 @@ const bookSource = {
 			shelf: props.shelf
 		}
 	}
-}
+};
 
 //HOC to show/hide loading animation
 const withLoading = (Component) =>
@@ -24,36 +23,28 @@ const withLoading = (Component) =>
 			</div>
 			: <Component {...others} />
 
-//This is used by the DropTarget HOC of react-dnd to add extra properties
-function collect(connect, monitor) {
+//This is used by the DragSource HOC of react-dnd to add extra properties
+const collect = (connect, monitor) => {
 	return {
 		connectDragSource: connect.dragSource(),
-		isDragging: monitor.isDragging(),
+		isDragging: monitor.isDragging()
 	}
-}
+};
 
 const Book = (props) => {
-	const {id, title, authors, imageLinks, shelf, onShelfChange, dragButton} = props
-	const {isDragging, connectDragSource} = props
+	const {id, title, authors, imageLinks, shelf, onShelfChange, isDraggable} = props;
+	const {isDragging, connectDragSource} = props;
 
-	return <div className="book" style={{opacity: isDragging ? 0.4 : 1}}>
-		<div className="book-top">
-			<div className="book-cover" style={{
-				width: 128,
-				height: 193,
-				backgroundImage: `url(${imageLinks.thumbnail})`
-			}}>
+	return connectDragSource(
+		<div className="book" style={{opacity: isDragging ? 0.4 : 1}}>
+			<div className="book-top" style={{cursor: isDraggable ? 'move' : 'default'}}>
+				<img className="book-cover" src={imageLinks.thumbnail} alt="Book cover"/>
+				{isDraggable || <ShelfChanger onShelfChange={onShelfChange} shelf={shelf} bookId={id}/>}
 			</div>
-			{connectDragSource(<div>
-				{dragButton
-					? <BookDragger/>
-					: <ShelfChanger onShelfChange={onShelfChange} shelf={shelf} bookId={id}/>}
-			</div>)}
+			<div className="book-title">{title}</div>
+			<div className="book-authors">{authors ? authors.join() : ''}</div>
+		</div>)
+};
 
-		</div>
-		<div className="book-title">{title}</div>
-		<div className="book-authors">{authors ? authors.join() : ''}</div>
-	</div>
-}
-
-export default DragSource('book', bookSource, collect)(withLoading(Book))
+//DragSource HOC of react-dnd
+export default DragSource('book', bookSource, collect)(withLoading(Book));

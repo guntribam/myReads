@@ -1,11 +1,11 @@
 import React from 'react'
+import * as BooksAPI from './BooksAPI'
 import {BrowserRouter} from 'react-router-dom';
 import {Route} from 'react-router-dom';
+import {DragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend'
 import Search from "./components/Search/Search";
 import ListBooks from "./components/ListBooks/ListBooks";
-import * as BooksAPI from './BooksAPI'
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -13,60 +13,67 @@ class BooksApp extends React.Component {
 		books: [],
 		searchBooks: [],
 		query: ''
-	}
+	};
 
 	componentDidMount = () => this.getBooks();
 
-	//This method add properties to be used by child components
-	buildBook = (bookObject) => {return {...bookObject, onShelfChange: this.onShelfChange, loading: false}}
+	//These method add properties to be used by views
+	buildBookForSearch = (bookObject) => {
+		return {...bookObject, onShelfChange: this.onShelfChange, loading: false, shelf: 'none'};
+	};
+	buildBookForList = (bookObject) => {
+		return {...bookObject, onShelfChange: this.onShelfChange, loading: false, isDraggable: true};
+	};
 
+	//This method retrieve my books
 	getBooks = async () => {
 		try {
 			const books = await BooksAPI.getAll();
-			this.setState({books: books.map(this.buildBook)})
+			this.setState({books: books.map(this.buildBookForList)});
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 		}
-	}
+	};
 
+	//This method retrieve searched books
 	onSearch = async (e) => {
 		const query = e.target.value;
 		if (query !== '') {
 			try {
-				const books = await BooksAPI.search(query, 10)
-				this.setState({searchBooks: books.map(this.buildBook),query})
+				const books = await BooksAPI.search(query, 10);
+				this.setState({searchBooks: books.map(this.buildBookForSearch), query});
 			} catch (e) {
-				console.log(e)
-				this.setState({query})
+				console.log(e);
+				this.setState({query});
 			}
 		}
-	}
+	};
 
 	//This method is used to change shelves with the loading animation
 	onShelfChange = async (newShelf, bookId) => {
 		this.activateLoading(bookId);
 		try {
-			await BooksAPI.update({id: bookId}, newShelf)
+			await BooksAPI.update({id: bookId}, newShelf);
 			this.getBooks();
-			this.onSearch({target: {value:this.state.query}})
+			this.onSearch({target: {value: this.state.query}});
 		}
 		catch (e) {
-			console.log(e)
+			console.log(e);
 		}
-	}
+	};
 
 	//Loading animation in all Routes
 	activateLoading = (bookId) =>
 		this.setState(prevState => {
 			const books = prevState.books;
-			const book = books[books.findIndex(book => book.id === bookId)]
-			if(book) book.loading = true
+			const book = books[books.findIndex(book => book.id === bookId)];
+			if (book) book.loading = true;
 
 			const searchBooks = prevState.searchBooks;
-			const searchBook = searchBooks[searchBooks.findIndex(book => book.id === bookId)]
-			if(searchBook) searchBook.loading = true
-			return {books, searchBooks}
-		})
+			const searchBook = searchBooks[searchBooks.findIndex(book => book.id === bookId)];
+			if (searchBook) searchBook.loading = true;
+			return {books, searchBooks};
+		});
 
 
 	render = () =>
@@ -85,4 +92,4 @@ class BooksApp extends React.Component {
 }
 
 //This is the HOC of react-dnd used for the drag and drop feature
-export default DragDropContext(HTML5Backend)(BooksApp)
+export default DragDropContext(HTML5Backend)(BooksApp);

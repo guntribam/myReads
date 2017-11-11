@@ -1,0 +1,82 @@
+.trash {
+    position: fixed;
+    left: 25px;
+    bottom: 25px;
+}
+
+.trash {
+    background: #2e7d32;
+    width: 66px;
+    height: 80px;
+    display: inline-block;
+    margin: 0 auto;
+
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.trash span {
+    position: absolute;
+    height: 12px;
+    background: #2e7d32;
+    top: -19px;
+    left: -10px;
+    right: -10px;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transform: rotate(0deg);
+    transition: transform 250ms;
+    transform-origin: 19% 100%;
+}
+
+.trash span:after {
+    content: '';
+    position: absolute;
+    width: 27px;
+    height: 7px;
+    background: #2e7d32;
+    top: -10px;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transform: rotate(0deg);
+    transition: transform 250ms;
+    transform-origin: 19% 100%;
+    left: 27px;
+}
+
+.trash i {
+    position: relative;
+    width: 5px;
+    height: 50px;
+    background: #fff;
+    display: block;
+    margin: 14px auto;
+    border-radius: 5px;
+}
+
+.trash i:after {
+    content: '';
+    width: 5px;
+    height: 50px;
+    background: #fff;
+    position: absolute;
+    left: -18px;
+    border-radius: 5px;
+}
+
+.trash i:before {
+    content: '';
+    width: 5px;
+    height: 50px;
+    background: #fff;
+    position: absolute;
+    right: -18px;
+    border-radius: 5px;
+}
+
+.open-trash span{
+    transform: rotate(-45deg);
+    transition: transform 250ms;
+}

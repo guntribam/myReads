@@ -2,13 +2,14 @@ import React from 'react';
 import Bookshelf from "../Bookshelf/Bookshelf";
 import Header from "../Header/header";
 import SearchButton from "../SearchButton/SearchButton";
+import Trash from "../Trash/Trash";
 import './ListBooks.css'
 
 const bookshelves = [
 	{title: "Currently Reading", value: "currentlyReading"},
 	{title: "Want to read", value: "wantToRead"},
 	{title: "Read", value: "read"}
-]
+];
 
 const ListBooks = ({books}) =>
 		<div className="list-books">
@@ -25,6 +26,7 @@ const ListBooks = ({books}) =>
 				</div>
 			</div>
 			<SearchButton/>
-		</div>
+			<Trash/>
+		</div>;
 
 export default ListBooks;

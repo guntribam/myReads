@@ -14,7 +14,6 @@ const Search  = ({books, onSearch, query}) =>
 						       placeholder="Search by title or author"
 						       onChange={onSearch}/>
 					</Debounce>
-
 				</div>
 			</div>
 			<div className="search-books-results">
@@ -26,4 +25,4 @@ const Search  = ({books, onSearch, query}) =>
 			</div>
 		</div>
 
-export default Search
+export default Search;

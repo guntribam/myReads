@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "immutability-helper": "^2.5.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dnd": "^2.5.4",
