@@ -38,7 +38,7 @@ const Book = (props) => {
 	return connectDragSource(
 		<div className="book" style={{opacity: isDragging ? 0.25 : 1}}>
 			<div className="book-top" style={{cursor: isDraggable ? 'move' : 'default'}}>
-				<img className="book-cover" src={imageLinks.thumbnail} alt="Book cover"/>
+				<img className="book-cover" src={imageLinks.thumbnail} alt="Book cover" />
 				{isDraggable || <ShelfChanger onShelfChange={onShelfChange} shelf={shelf} bookId={id}/>}
 			</div>
 			<div className="book-title">{title}</div>

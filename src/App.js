@@ -18,9 +18,12 @@ class BooksApp extends React.Component {
 	componentDidMount = () => this.getBooks();
 
 	//These method add properties to be used by views
-	buildBookForSearch = (bookObject) => {
-		return {...bookObject, onShelfChange: this.onShelfChange, loading: false, shelf: 'none'};
+	buildBookForSearch = (searchBook) => {
+		const book = this.state.books.find(book => searchBook.id === book.id);
+		return book ? {...searchBook, onShelfChange: this.onShelfChange, loading: false, shelf: book.shelf}
+					: {...searchBook, onShelfChange: this.onShelfChange, loading: false, shelf: 'none'}
 	};
+
 	buildBookForList = (bookObject) => {
 		return {...bookObject, onShelfChange: this.onShelfChange, loading: false, isDraggable: true};
 	};
@@ -40,8 +43,8 @@ class BooksApp extends React.Component {
 		const query = e.target.value;
 		if (query !== '') {
 			try {
-				const books = await BooksAPI.search(query, 10);
-				this.setState({searchBooks: books.map(this.buildBookForSearch), query});
+				const searchBooks = await BooksAPI.search(query, 10);
+				this.setState({searchBooks: searchBooks.map(this.buildBookForSearch), query});
 			} catch (e) {
 				console.log(e);
 				this.setState({query});
@@ -49,7 +52,7 @@ class BooksApp extends React.Component {
 		}
 	};
 
-	//This method is used to change shelves with the loading animation
+//This method is used to change shelves with the loading animation
 	onShelfChange = async (newShelf, bookId) => {
 		this.activateLoading(bookId);
 		try {
@@ -62,7 +65,7 @@ class BooksApp extends React.Component {
 		}
 	};
 
-	//Loading animation in all Routes
+//Loading animation in all Routes
 	activateLoading = (bookId) =>
 		this.setState(prevState => {
 			const books = prevState.books;
