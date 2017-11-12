@@ -44,7 +44,10 @@ class BooksApp extends React.Component {
 		if (query !== '') {
 			try {
 				const searchBooks = await BooksAPI.search(query, 10);
-				this.setState({searchBooks: searchBooks.map(this.buildBookForSearch), query});
+				this.setState({
+					searchBooks: searchBooks.length > 0 ? searchBooks.map(this.buildBookForSearch): searchBooks,
+					query
+				});
 			} catch (e) {
 				console.log(e);
 				this.setState({query});
@@ -52,7 +55,7 @@ class BooksApp extends React.Component {
 		}
 	};
 
-//This method is used to change shelves with the loading animation
+	//This method is used to change shelves with the loading animation
 	onShelfChange = async (newShelf, bookId) => {
 		this.activateLoading(bookId);
 		try {
@@ -65,7 +68,7 @@ class BooksApp extends React.Component {
 		}
 	};
 
-//Loading animation in all Routes
+	//Loading animation in all Routes
 	activateLoading = (bookId) =>
 		this.setState(prevState => {
 			const books = prevState.books;
